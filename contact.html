@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact &amp; Book — Northfront AI</title>
+<meta name="description" content="Book a consultation with Northfront AI — pick a time with our scheduler or send us a message about your AI goals." />
+<link rel="stylesheet" href="styles.css" />
+<script src="components.js" defer></script>
+<script src="contact.js" defer></script>
+</head>
+<body>
+
+<header id="site-header"></header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span> Contact</div>
+    <span class="eyebrow">Book an appointment</span>
+    <h1>Let's plan your AI move.</h1>
+    <p class="lead">Pick a time that works for you, or send a message and we'll reply within one business day.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap contact-grid">
+    <!-- LEFT: context -->
+    <div>
+      <span class="eyebrow">Who we help</span>
+      <h2>Three ways to start</h2>
+      <ul class="checks" style="margin-top:18px">
+        <li><b>Individuals</b> — book a 1:1 career consultation.</li>
+        <li><b>Businesses</b> — book a free 20-minute discovery call.</li>
+        <li><b>Institutions</b> — discuss research &amp; partnerships.</li>
+      </ul>
+      <div class="calendly-slot" style="margin-top:22px">
+        📧 Prefer email? Reach us anytime at <b><a href="mailto:hello@northfront.ai" style="color:var(--red)">hello@northfront.ai</a></b>. We're based in Canada and work in English and French.
+      </div>
+    </div>
+
+    <!-- RIGHT: scheduler -->
+    <div>
+      <div id="scheduler" class="scheduler"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Fallback form -->
+<section class="section-alt">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:30px">
+      <span class="eyebrow">Or send a message</span>
+      <h2>Tell us what you're trying to do</h2>
+      <p class="lead">Not ready to book a slot? Send the details and we'll come back with next steps.</p>
+    </div>
+
+    <form id="bookForm" style="max-width:640px;margin:0 auto">
+      <div class="ok-msg" id="okMsg">✅ Thanks! Your email app should open with your request ready to send. If it didn't, email us directly at <b>hello@northfront.ai</b>.</div>
+      <div class="field">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" required placeholder="Jane Tremblay" />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="jane@example.com" />
+      </div>
+      <div class="field">
+        <label for="service">What are you interested in?</label>
+        <select id="service" name="service" required>
+          <option value="">Select a service…</option>
+          <option>AI Career Audit / Consulting (individual)</option>
+          <option>Small-Business AI Transition</option>
+          <option>Enterprise AI Consulting</option>
+          <option>AI Research / Partnership</option>
+          <option>Not sure yet — help me decide</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="field">Your field or industry</label>
+        <input id="field" name="field" type="text" placeholder="e.g. accounting, trades, healthcare" />
+      </div>
+      <div class="field">
+        <label for="msg">What would you like help with?</label>
+        <textarea id="msg" name="msg" placeholder="A sentence or two about your goals…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send my request</button>
+      <p class="form-note">By submitting you agree to be contacted about your request. We respect your privacy (PIPEDA-compliant).</p>
+    </form>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+
+</body>
+</html>
