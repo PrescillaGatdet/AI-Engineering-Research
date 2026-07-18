@@ -37,9 +37,14 @@ function initScheduler() {
   mount.classList.add('calendly-inline-widget');
   mount.setAttribute('data-url', SCHEDULER_URL);
 
+  // Note: Calendly does not publish a stable Subresource Integrity hash for
+  // this asset (it updates it without notice), so a pinned `integrity`
+  // attribute isn't practical here — it would break the widget on their next
+  // deploy. `crossorigin` is set so the load is at least CORS-checked.
   const s = document.createElement('script');
   s.src = 'https://assets.calendly.com/assets/external/widget.js';
   s.async = true;
+  s.crossOrigin = 'anonymous';
   document.body.appendChild(s);
 }
 
@@ -47,7 +52,7 @@ function initFallbackForm() {
   const form = document.getElementById('bookForm');
   if (!form) return;
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
     const val = id => (document.getElementById(id)?.value || '').trim();
 
@@ -56,6 +61,7 @@ function initFallbackForm() {
     const service = val('service');
     const field = val('field');
     const msg = val('msg');
+    const company = val('company'); // honeypot — real visitors leave this blank
 
     const subject = encodeURIComponent('Appointment request — ' + (service || 'general'));
     const body = encodeURIComponent(
@@ -65,13 +71,38 @@ function initFallbackForm() {
       'Field/Industry: ' + field + '\n\n' +
       'Goals:\n' + msg
     );
+    const mailtoUrl = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
 
-    window.location.href = 'mailto:' + CONTACT_EMAIL + '?subject=' + subject + '&body=' + body;
+    const okMsg = document.getElementById('okMsg');
+    const errMsg = document.getElementById('errMsg');
 
-    const ok = document.getElementById('okMsg');
-    if (ok) {
-      ok.style.display = 'block';
-      ok.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    let saved = false;
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, service, field, msg, company }),
+      });
+      saved = res.ok;
+    } catch {
+      saved = false;
+    }
+
+    // Always open the mailto link too — redundant delivery, no single point of failure.
+    window.location.href = mailtoUrl;
+
+    if (saved) {
+      if (errMsg) errMsg.style.display = 'none';
+      if (okMsg) {
+        okMsg.style.display = 'block';
+        okMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } else {
+      if (okMsg) okMsg.style.display = 'none';
+      if (errMsg) {
+        errMsg.style.display = 'block';
+        errMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
   });
 }

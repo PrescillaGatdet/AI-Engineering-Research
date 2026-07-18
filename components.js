@@ -18,6 +18,7 @@ const NAV = [
   { label: 'Pricing',  href: 'pricing.html' },
   { label: 'About',    href: 'about.html' },
   { label: 'Contact',  href: 'contact.html' },
+  { label: 'Log in',   href: 'login.html' },
 ];
 
 // Footer column definitions
@@ -48,13 +49,23 @@ function currentPage() {
   return path && path.length ? path : 'index.html';
 }
 
+// All values interpolated into the templates below are currently hardcoded
+// constants (SITE/NAV/FOOT_LINKS), but they're still escaped before being
+// injected via innerHTML — if this is ever parametrized with a URL query
+// param, hash, or other visitor-controlled value, it stays XSS-safe.
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, ch => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[ch]));
+}
+
 function buildHeader() {
   const here = currentPage();
-  const logo = `<a href="index.html" class="logo"><span class="mark">N</span> ${SITE.brand}<span class="logo-accent">${SITE.brandAccent}</span></a>`;
+  const logo = `<a href="index.html" class="logo"><span class="mark">N</span> ${escapeHtml(SITE.brand)}<span class="logo-accent">${escapeHtml(SITE.brandAccent)}</span></a>`;
 
   const navItems = NAV.map(item => {
     const active = item.href === here ? ' class="active"' : '';
-    return `<a href="${item.href}"${active}>${item.label}</a>`;
+    return `<a href="${escapeHtml(item.href)}"${active}>${escapeHtml(item.label)}</a>`;
   }).join('\n        ');
 
   return `
@@ -74,9 +85,9 @@ function buildHeader() {
 function buildFooter() {
   const cols = FOOT_LINKS.map(col => `
         <div>
-          <h4>${col.title}</h4>
+          <h4>${escapeHtml(col.title)}</h4>
           <ul>
-            ${col.links.map(l => `<li><a href="${l.href}">${l.label}</a></li>`).join('\n            ')}
+            ${col.links.map(l => `<li><a href="${escapeHtml(l.href)}">${escapeHtml(l.label)}</a></li>`).join('\n            ')}
           </ul>
         </div>`).join('');
 
@@ -84,21 +95,21 @@ function buildFooter() {
   <div class="wrap">
     <div class="foot-grid">
       <div style="max-width:320px">
-        <div class="logo"><span class="mark">N</span> ${SITE.brand}<span class="logo-accent">${SITE.brandAccent}</span></div>
+        <div class="logo"><span class="mark">N</span> ${escapeHtml(SITE.brand)}<span class="logo-accent">${escapeHtml(SITE.brandAccent)}</span></div>
         <p>Canada's AI transition partner. Putting Canadians on the front line of innovation.</p>
       </div>
       <div class="foot-links">${cols}
         <div>
           <h4>Contact</h4>
           <ul>
-            <li><a href="mailto:${SITE.email}">${SITE.email}</a></li>
+            <li><a href="mailto:${escapeHtml(SITE.email)}">${escapeHtml(SITE.email)}</a></li>
             <li>Canada · EN / FR</li>
           </ul>
         </div>
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="yr"></span> ${SITE.brand} ${SITE.brandAccent}. All rights reserved.</span>
+      <span>© <span id="yr"></span> ${escapeHtml(SITE.brand)} ${escapeHtml(SITE.brandAccent)}. All rights reserved.</span>
       <span class="disclaim">Working draft site. Brand name, contact email and pricing are placeholders — edit components.js and the page content.</span>
     </div>
   </div>`;

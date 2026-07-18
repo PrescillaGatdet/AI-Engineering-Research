@@ -7,6 +7,8 @@
 <meta name="description" content="Overview of Northfront AI's flagship report on how artificial intelligence is reshaping the Canadian workforce, industry by industry." />
 <link rel="stylesheet" href="styles.css" />
 <script src="components.js" defer></script>
+<script src="newsletter.js" defer></script>
+<script type="module" src="report-access.js"></script>
 </head>
 <body>
 
@@ -54,6 +56,9 @@
 
     <h2>Use it in your decisions</h2>
     <p>Individuals use it to plan their next move; SMBs use it to pick where to adopt first; enterprises and institutions cite it in strategy and policy. If you need a custom edition for your sector or region, that's exactly what our <a href="ai-research.html">research practice</a> does.</p>
+
+    <h2>Read the full report</h2>
+    <div id="report-gate"></div>
   </div>
 </section>
 
@@ -62,8 +67,17 @@
     <div class="cta-band">
       <h2>Want the edition for your industry?</h2>
       <p>Get notified on release, or commission a study scoped to your sector.</p>
+      <form class="newsletter-form" data-source="ai-workforce-report" style="margin:0 auto 18px;justify-content:center" novalidate>
+        <div class="ok-msg">✅ You're on the list — we'll email you when new editions drop.</div>
+        <div class="err-msg" style="display:none">⚠️ Something went wrong. Please try again or <a href="contact.html" style="color:inherit;text-decoration:underline">contact us</a>.</div>
+        <div class="hp-field" aria-hidden="true">
+          <label for="nl-company-report">Company</label>
+          <input id="nl-company-report" name="company" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="email" name="email" required placeholder="you@email.com" aria-label="Email address" />
+        <button type="submit" class="btn btn-primary">Get notified</button>
+      </form>
       <div class="hero-actions" style="justify-content:center">
-        <a href="contact.html" class="btn btn-primary">Get notified →</a>
         <a href="ai-research.html" class="btn btn-ghost">Commission research</a>
       </div>
     </div>

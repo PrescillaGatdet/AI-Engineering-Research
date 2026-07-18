@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Log in — Northfront AI</title>
+<meta name="description" content="Log in or create an account to access Northfront AI's full research reports." />
+<link rel="stylesheet" href="styles.css" />
+<script src="components.js" defer></script>
+</head>
+<body>
+
+<header id="site-header"></header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span> Log in</div>
+    <span class="eyebrow">Account</span>
+    <h1 id="authTitle">Log in</h1>
+    <p class="lead">Access the full research reports and get notified when new editions drop.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap" style="max-width:480px">
+    <form id="authForm" novalidate>
+      <div class="ok-msg" id="okMsg"></div>
+      <div class="err-msg" id="errMsg" style="display:none"></div>
+      <div class="field">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" name="password" type="password" required minlength="6" placeholder="At least 6 characters" autocomplete="current-password" />
+      </div>
+      <button type="submit" class="btn btn-primary" id="authSubmit" style="width:100%;justify-content:center">Log in</button>
+      <p class="form-note" style="text-align:center;margin-top:14px">
+        <a href="#" id="modeToggle">Don't have an account? Sign up</a>
+      </p>
+    </form>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+
+<script type="module">
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+  // 👉 Paste your Supabase project URL and anon (public) key here to go live.
+  //    Find both in your Supabase project: Settings → API.
+  //    The anon key is safe to expose client-side — it's a public
+  //    identifier, not a secret; Row Level Security controls what it can do.
+  const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+  const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+
+  const isPlaceholder = SUPABASE_URL.includes('YOUR-PROJECT') || SUPABASE_ANON_KEY.includes('YOUR-ANON-KEY');
+
+  const form = document.getElementById('authForm');
+  const modeToggle = document.getElementById('modeToggle');
+  const okMsg = document.getElementById('okMsg');
+  const errMsg = document.getElementById('errMsg');
+  const submitBtn = document.getElementById('authSubmit');
+  const title = document.getElementById('authTitle');
+
+  function nextParam() {
+    return new URLSearchParams(window.location.search).get('next') || 'ai-workforce-report.html';
+  }
+
+  if (isPlaceholder) {
+    errMsg.textContent = "⚠️ Login isn't configured yet — paste your Supabase URL and anon key into login.html to go live.";
+    errMsg.style.display = 'block';
+    form.querySelectorAll('input,button').forEach(el => (el.disabled = true));
+  } else {
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let mode = 'signin';
+
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) window.location.href = nextParam();
+    });
+
+    modeToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      mode = mode === 'signin' ? 'signup' : 'signin';
+      title.textContent = mode === 'signin' ? 'Log in' : 'Create your account';
+      submitBtn.textContent = mode === 'signin' ? 'Log in' : 'Sign up';
+      modeToggle.textContent = mode === 'signin' ? "Don't have an account? Sign up" : 'Already have an account? Log in';
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+
+      submitBtn.disabled = true;
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+
+      const { error } = mode === 'signin'
+        ? await supabase.auth.signInWithPassword({ email, password })
+        : await supabase.auth.signUp({ email, password });
+
+      submitBtn.disabled = false;
+
+      if (error) {
+        errMsg.textContent = '⚠️ ' + error.message;
+        errMsg.style.display = 'block';
+        return;
+      }
+
+      okMsg.textContent = mode === 'signin' ? '✅ Logged in — redirecting…' : '✅ Account created — redirecting…';
+      okMsg.style.display = 'block';
+      setTimeout(() => { window.location.href = nextParam(); }, 600);
+    });
+  }
+</script>
+
+</body>
+</html>

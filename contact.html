@@ -55,7 +55,13 @@
     </div>
 
     <form id="bookForm" style="max-width:640px;margin:0 auto">
-      <div class="ok-msg" id="okMsg">✅ Thanks! Your email app should open with your request ready to send. If it didn't, email us directly at <b>hello@northfront.ai</b>.</div>
+      <div class="ok-msg" id="okMsg">✅ Thanks! We've received your request. Your email app should also open so you can send a copy directly.</div>
+      <div class="err-msg" id="errMsg" style="display:none">⚠️ We couldn't save your request automatically, but your email app should have opened — please send that message, or email us directly at <b>hello@northfront.ai</b>.</div>
+      <!-- Honeypot: hidden from real visitors via off-screen CSS, but a plain visible-to-bots text input. Left blank by humans. -->
+      <div style="position:absolute;left:-9999px" aria-hidden="true">
+        <label for="company">Company</label>
+        <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+      </div>
       <div class="field">
         <label for="name">Full name</label>
         <input id="name" name="name" type="text" required placeholder="Jane Tremblay" />

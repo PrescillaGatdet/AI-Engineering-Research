@@ -264,6 +264,12 @@ textarea{resize:vertical;min-height:96px}
 .form-note{font-size:.82rem;color:var(--muted);margin-top:6px}
 .calendly-slot{margin-top:18px;border:1px dashed var(--line);border-radius:12px;padding:16px;background:var(--bg-alt);font-size:.9rem;color:var(--ink-soft)}
 .ok-msg{display:none;background:#e9f7ef;border:1px solid #bfe6cd;color:#1d7a44;border-radius:10px;padding:14px;font-size:.92rem;margin-bottom:16px}
+.err-msg{background:var(--maple-soft);border:1px solid #f3c6c2;color:var(--maple);border-radius:10px;padding:14px;font-size:.92rem;margin-bottom:16px}
+
+.newsletter-form{background:none;border:none;box-shadow:none;padding:0;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start;max-width:440px}
+.newsletter-form input[type=email]{flex:1 1 220px}
+.newsletter-form .ok-msg,.newsletter-form .err-msg{width:100%;margin-bottom:8px}
+.newsletter-form .hp-field{position:absolute;left:-9999px}
 
 /* ============================================================
    FOOTER  — DARK
