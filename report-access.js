@@ -10,8 +10,8 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 // Must match the values in login.html.
-const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+const SUPABASE_URL = 'https://mygvgcrpywzaffybsrdp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15Z3ZnY3JweXd6YWZmeWJzcmRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzNDIyMTEsImV4cCI6MjA5OTkxODIxMX0.yn5T8J4C1mrqJY2elCXjhq5ZrgnbrxIicK7KgL2Pe6k';
 
 const isPlaceholder = SUPABASE_URL.includes('YOUR-PROJECT') || SUPABASE_ANON_KEY.includes('YOUR-ANON-KEY');
 
