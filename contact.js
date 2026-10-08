@@ -107,9 +107,33 @@ function initFallbackForm() {
   });
 }
 
+// "Who are you?" buttons preselect the matching service in the form.
+// A link like contact.html?audience=institution preselects on arrival.
+function initAudiencePicker() {
+  const buttons = document.querySelectorAll('.aud[data-audience]');
+  const select = document.getElementById('service');
+  if (!buttons.length || !select) return;
+
+  function choose(btn, scroll) {
+    buttons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    select.value = btn.dataset.service;
+    if (scroll) {
+      document.getElementById('message')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('name')?.focus({ preventScroll: true });
+    }
+  }
+
+  buttons.forEach(b => b.addEventListener('click', () => choose(b, true)));
+
+  const wanted = new URLSearchParams(window.location.search).get('audience');
+  const match = Array.from(buttons).find(b => b.dataset.audience === wanted);
+  if (match) choose(match, false);
+}
+
 function init() {
   initScheduler();
   initFallbackForm();
+  initAudiencePicker();
 }
 
 if (document.readyState === 'loading') {

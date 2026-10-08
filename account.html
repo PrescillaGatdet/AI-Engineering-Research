@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your account · Cantana</title>
+<meta name="description" content="Your Cantana account: research access and account details." />
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="styles.css" />
+<script src="components.js" defer></script>
+<script src="account.js" type="module"></script>
+</head>
+<body>
+
+<header id="site-header"></header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Home</a><span>/</span> Account</div>
+    <span class="eyebrow">Your account</span>
+    <h1 id="acctGreeting">Welcome.</h1>
+    <p class="lead" id="acctLead">Loading your account…</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="err-msg" id="acctErr" style="display:none"></div>
+
+    <div class="acct-grid" id="acctBody" hidden>
+      <!-- Research access -->
+      <div class="acct-card">
+        <span class="price-k">Research access</span>
+        <h2 class="acct-h">AI &amp; the Canadian Workforce</h2>
+        <p>Your account includes the full flagship report. Download links are generated securely and expire after a minute.</p>
+        <div class="hero-actions" style="margin-top:20px">
+          <button type="button" class="btn btn-primary" id="downloadBtn">Download the full report</button>
+          <a href="ai-workforce-report.html" class="btn btn-ghost">Read the overview</a>
+        </div>
+        <p class="err-msg" id="downloadErr" style="display:none;margin-top:14px"></p>
+        <p class="acct-more">More reports will appear here as they're published. <a href="research.html#publications">Browse publications →</a></p>
+      </div>
+
+      <!-- Account details -->
+      <div class="acct-card">
+        <span class="price-k">Account details</span>
+        <dl class="acct-facts">
+          <div><dt>Email</dt><dd id="acctEmail">—</dd></div>
+          <div><dt>Member since</dt><dd id="acctSince">—</dd></div>
+        </dl>
+        <form id="nameForm" class="acct-form" novalidate>
+          <div class="ok-msg" id="nameOk">✅ Saved.</div>
+          <div class="field">
+            <label for="acctName">Full name</label>
+            <input id="acctName" name="name" type="text" maxlength="120" autocomplete="name" placeholder="Your name" />
+          </div>
+          <button type="submit" class="btn btn-ghost" id="nameSave">Save name</button>
+        </form>
+        <button type="button" class="btn btn-ghost acct-logout" id="logoutBtn">Log out</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Want to go further?</h2>
+      <p>Career audits, business adoption, enterprise advisory and research partnerships.</p>
+      <a href="work-with-us.html" class="btn btn-primary">Work with Cantana →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="site-footer"></footer>
+
+</body>
+</html>

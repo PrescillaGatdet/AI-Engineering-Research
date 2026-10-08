@@ -7,38 +7,73 @@
 // ---- Configuration you can edit in one place ----
 const SITE = {
   email: 'hello@northfront.ai',          // <-- your real contact email
-  brand: 'Northfront',
-  brandAccent: 'AI',
+  brand: 'Cantana',
+  wordmark: 'CANTANA',                  // how the name is set in the logo
+  mark: 'C',
 };
 
 // Primary navigation: label + target file
 const NAV = [
-  { label: 'Services', href: 'services.html' },
   { label: 'Research', href: 'research.html' },
-  { label: 'Pricing',  href: 'pricing.html' },
+  { label: 'Services', href: 'services.html' },
+  { label: 'Insights', href: 'insights.html' },
   { label: 'About',    href: 'about.html' },
-  { label: 'Contact',  href: 'contact.html' },
-  { label: 'Log in',   href: 'login.html' },
 ];
+
+// Right-hand utility links (folded into the menu on small screens)
+const NAV_UTIL = [
+  { label: 'Contact', href: 'contact.html' },
+  { label: 'Log in',  href: 'login.html' },
+];
+
+const NAV_CTA = { label: 'Work with us', short: 'Work with us', href: 'work-with-us.html' };
+
+// Supabase keeps the session in localStorage under "sb-<project>-auth-token".
+// Checking for it lets every page swap "Log in" for "Account" without
+// loading the Supabase library. It's only a label: account.html and the
+// API still verify the session properly.
+function looksLoggedIn() {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (/^sb-.+-auth-token$/.test(key) && localStorage.getItem(key)) return true;
+    }
+  } catch (e) { /* storage blocked: treat as logged out */ }
+  return false;
+}
+
+function utilLinks() {
+  return NAV_UTIL.map(item =>
+    item.href === 'login.html' && looksLoggedIn() ? { label: 'Account', href: 'account.html' } : item
+  );
+}
 
 // Footer column definitions
 const FOOT_LINKS = [
   {
-    title: 'Services',
+    title: 'Research',
     links: [
-      { label: 'AI Research',        href: 'ai-research.html' },
-      { label: 'Career Consulting',  href: 'career-consulting.html' },
-      { label: 'Small-Business AI',  href: 'small-business.html' },
-      { label: 'AI Consulting',      href: 'ai-consulting.html' },
+      { label: 'Research overview',          href: 'research.html' },
+      { label: 'Publications',               href: 'research.html#publications' },
+      { label: 'AI & the Canadian Workforce', href: 'ai-workforce-report.html' },
+      { label: 'Insights',                   href: 'insights.html' },
     ],
   },
   {
-    title: 'Company',
+    title: 'Services',
     links: [
-      { label: 'About',    href: 'about.html' },
-      { label: 'Research', href: 'research.html' },
-      { label: 'Pricing',  href: 'pricing.html' },
-      { label: 'Contact',  href: 'contact.html' },
+      { label: 'Career Consulting',  href: 'career-consulting.html' },
+      { label: 'Small-Business AI',  href: 'small-business.html' },
+      { label: 'Enterprise AI',      href: 'ai-consulting.html' },
+      { label: 'Research Partnerships', href: 'ai-research.html' },
+    ],
+  },
+  {
+    title: 'Cantana',
+    links: [
+      { label: 'About',        href: 'about.html' },
+      { label: 'Work with us', href: 'work-with-us.html' },
+      { label: 'Contact',      href: 'contact.html' },
     ],
   },
 ];
@@ -61,22 +96,33 @@ function escapeHtml(str) {
 
 function buildHeader() {
   const here = currentPage();
-  const logo = `<a href="index.html" class="logo"><span class="mark">N</span> ${escapeHtml(SITE.brand)}<span class="logo-accent">${escapeHtml(SITE.brandAccent)}</span></a>`;
+  const logo = `<a href="index.html" class="logo"><span class="mark">${escapeHtml(SITE.mark)}</span> ${escapeHtml(SITE.wordmark)}</a>`;
 
   const navItems = NAV.map(item => {
     const active = item.href === here ? ' class="active"' : '';
     return `<a href="${escapeHtml(item.href)}"${active}>${escapeHtml(item.label)}</a>`;
   }).join('\n        ');
 
+  // Utility links appear on the right on desktop, and inside the menu on mobile.
+  const util = utilLinks();
+  const utilItems = util.map(item => {
+    const cls = 'nav-util' + (item.href === here ? ' active' : '');
+    return `<a href="${escapeHtml(item.href)}" class="${cls}">${escapeHtml(item.label)}</a>`;
+  }).join('\n      ');
+  const utilInMenu = util.map(item =>
+    `<a href="${escapeHtml(item.href)}" class="nav-secondary">${escapeHtml(item.label)}</a>`
+  ).join('\n        ');
+
   return `
   <div class="wrap nav-inner">
     ${logo}
     <nav class="nav-links" id="navlinks">
         ${navItems}
+        ${utilInMenu}
     </nav>
     <div class="nav-cta">
-      <a href="research.html" class="btn btn-ghost">Read our research</a>
-      <a href="contact.html" class="btn btn-primary">Book a consultation</a>
+      ${utilItems}
+      <a href="${escapeHtml(NAV_CTA.href)}" class="btn btn-primary"><span class="cta-long">${escapeHtml(NAV_CTA.label)} →</span><span class="cta-short">${escapeHtml(NAV_CTA.short)}</span></a>
       <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">☰</button>
     </div>
   </div>`;
@@ -95,8 +141,8 @@ function buildFooter() {
   <div class="wrap">
     <div class="foot-grid">
       <div style="max-width:320px">
-        <div class="logo"><span class="mark">N</span> ${escapeHtml(SITE.brand)}<span class="logo-accent">${escapeHtml(SITE.brandAccent)}</span></div>
-        <p>Canada's AI transition partner. Putting Canadians on the front line of innovation.</p>
+        <div class="logo"><span class="mark">${escapeHtml(SITE.mark)}</span> ${escapeHtml(SITE.wordmark)}</div>
+        <p>A Canadian AI research and adoption organization. Canada leads in AI research. We help it lead in adoption.</p>
       </div>
       <div class="foot-links">${cols}
         <div>
@@ -109,8 +155,8 @@ function buildFooter() {
       </div>
     </div>
     <div class="foot-bottom">
-      <span>© <span id="yr"></span> ${escapeHtml(SITE.brand)} ${escapeHtml(SITE.brandAccent)}. All rights reserved.</span>
-      <span class="disclaim">Working draft site. Brand name, contact email and pricing are placeholders — edit components.js and the page content.</span>
+      <span>© <span id="yr"></span> ${escapeHtml(SITE.brand)}. All rights reserved.</span>
+      <span>Research · Advisory · Adoption</span>
     </div>
   </div>`;
 }

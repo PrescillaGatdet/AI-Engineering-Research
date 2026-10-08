@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Research — Northfront AI</title>
-<meta name="description" content="Northfront AI's research on how artificial intelligence is reshaping Canadian industries and the workforce." />
+<title>Research · Cantana</title>
+<meta name="description" content="Cantana's research programme: how artificial intelligence is changing Canadian work, industries, organizations and economic competitiveness." />
 <link rel="stylesheet" href="styles.css" />
 <script src="components.js" defer></script>
 <script src="newsletter.js" defer></script>
+<script src="research.js" defer></script>
 </head>
 <body>
 
@@ -16,135 +17,171 @@
 <section class="page-hero">
   <div class="wrap">
     <div class="breadcrumb"><a href="index.html">Home</a><span>/</span> Research</div>
-    <span class="eyebrow">From the lab</span>
-    <h1>Straight answers on how AI is changing Canadian work.</h1>
-    <p class="lead">Plain-spoken, Canada-focused research on how AI is changing work and industry. We publish most of it in the open, and take on commissioned studies when someone needs a deeper look.</p>
+    <span class="eyebrow">Cantana Research</span>
+    <h1>Understanding Canada's AI transition.</h1>
+    <p class="lead">We study how artificial intelligence is changing Canadian work, industries, organizations and economic competitiveness. Most of our work is published in the open, in English and French.</p>
+    <div class="hero-actions" style="margin-top:28px">
+      <a href="#publications" class="btn btn-primary">Browse publications →</a>
+      <a href="contact.html?audience=institution" class="btn btn-ghost">Partner on research</a>
+    </div>
+  </div>
+</section>
+
+<!-- Research pillars -->
+<section>
+  <div class="wrap">
+    <div class="pillars-head">
+      <div>
+        <span class="eyebrow">Research programme</span>
+        <h2>Five areas of inquiry.</h2>
+      </div>
+      <p class="lead">Each area asks one question: what is actually changing in Canada, and what should people do about it?</p>
+    </div>
+    <ol class="pillars">
+      <li class="pillar"><span class="pillar-k">01</span><h3>Work &amp; Workforce</h3><p>How AI changes tasks, occupations, skills and career trajectories.</p></li>
+      <li class="pillar"><span class="pillar-k">02</span><h3>Business &amp; Productivity</h3><p>How Canadian businesses turn AI capabilities into measurable productivity.</p></li>
+      <li class="pillar"><span class="pillar-k">03</span><h3>Industry Transformation</h3><p>How AI is changing Canada's major industries.</p></li>
+      <li class="pillar"><span class="pillar-k">04</span><h3>Responsible Adoption</h3><p>Adopting AI while managing risk, governance, privacy and trust.</p></li>
+      <li class="pillar"><span class="pillar-k">05</span><h3>Canada's Competitiveness</h3><p>How adoption shapes Canada's position in the global economy.</p></li>
+    </ol>
   </div>
 </section>
 
 <!-- Flagship -->
-<section>
-  <div class="wrap">
-    <div class="feature-row" style="margin-top:0">
-      <div class="feature-media" style="background:var(--panel);color:var(--primary-dark)">
-        <svg width="66" height="66" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
-          <path d="M14 3v5h5"/>
-          <path d="M8.5 12h7M8.5 15h7M8.5 18h4"/>
-        </svg>
+<section class="section-alt">
+  <div class="wrap research-grid">
+    <div>
+      <span class="eyebrow">Flagship study</span>
+      <h2>AI &amp; the Canadian Workforce</h2>
+      <p class="lead">Which Canadian jobs will change first? Which tasks are likely to be automated, which will be augmented, and which remain resilient?</p>
+      <p class="research-copy">Our ongoing study looks at AI's impact task by task, giving workers, employers and policymakers a clearer picture of what's coming. Industry editions are released throughout the year.</p>
+      <div class="hero-actions" style="margin-top:26px">
+        <a href="ai-workforce-report.html" class="btn btn-primary">Read the overview →</a>
       </div>
-      <div>
-        <span class="badge">Flagship report</span>
-        <h2 style="margin-top:14px">AI &amp; the Canadian Workforce</h2>
-        <p class="lead">Our ongoing study of what's automatable, what's augmentable, and where the real opportunities are, released in industry editions throughout the year.</p>
-        <div class="hero-actions" style="margin-top:20px">
-          <a href="ai-workforce-report.html" class="btn btn-primary">Read the overview →</a>
+      <form class="newsletter-form" data-source="research" style="margin-top:18px" novalidate>
+        <div class="ok-msg">✅ You're on the list. We'll email you when new editions are published.</div>
+        <div class="err-msg" style="display:none">⚠️ Something went wrong. Please try again or <a href="contact.html" style="color:var(--red);text-decoration:underline">contact us</a>.</div>
+        <div class="hp-field" aria-hidden="true">
+          <label for="nl-company-research">Company</label>
+          <input id="nl-company-research" name="company" type="text" tabindex="-1" autocomplete="off" />
         </div>
-        <form class="newsletter-form" data-source="research" style="margin-top:16px" novalidate>
-          <div class="ok-msg">✅ You're on the list — we'll email you when new editions drop.</div>
-          <div class="err-msg" style="display:none">⚠️ Something went wrong. Please try again or <a href="contact.html" style="color:var(--red);text-decoration:underline">contact us</a>.</div>
-          <div class="hp-field" aria-hidden="true">
-            <label for="nl-company-research">Company</label>
-            <input id="nl-company-research" name="company" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-          <input type="email" name="email" required placeholder="you@email.com" aria-label="Email address" />
-          <button type="submit" class="btn btn-primary">Get notified</button>
-        </form>
-      </div>
+        <input type="email" name="email" required placeholder="you@email.com" aria-label="Email address" />
+        <button type="submit" class="btn btn-primary">Get new editions</button>
+      </form>
     </div>
+
+    <a class="report-card" href="ai-workforce-report.html">
+      <span class="report-tag">Flagship report</span>
+      <h3>AI &amp; the Canadian Workforce</h3>
+      <p>A task-level view of how artificial intelligence could reshape Canadian work.</p>
+      <ul class="report-chips">
+        <li class="c-auto">Automatable</li>
+        <li class="c-aug">Augmentable</li>
+        <li class="c-res">Resilient</li>
+      </ul>
+      <dl class="report-facts">
+        <div><dt>20+</dt><dd>industries in scope</dd></div>
+        <div><dt>Task-level</dt><dd>analysis</dd></div>
+        <div><dt>EN / FR</dt><dd>bilingual editions</dd></div>
+      </dl>
+      <span class="report-cta">Read the overview <i aria-hidden="true">→</i></span>
+    </a>
   </div>
 </section>
 
-<!-- Article list -->
-<section class="section-alt">
+<!-- Publications -->
+<section id="publications">
   <div class="wrap">
-    <span class="eyebrow">Articles &amp; briefs</span>
-    <h2 style="margin-bottom:32px">What we've published, and what's next</h2>
-    <div class="article-grid">
-      <a class="article" href="ai-workforce-report.html">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/>
-            <path d="M14 3v5h5"/><path d="M8.5 12h7M8.5 15h7M8.5 18h4"/>
-          </svg>
-        </div>
-        <div class="body">
-          <span class="tag">Flagship</span>
-          <h3>AI &amp; the Canadian Workforce</h3>
+    <div class="pub-head">
+      <div>
+        <span class="eyebrow">Publications</span>
+        <h2>Reports, papers and briefings</h2>
+      </div>
+    </div>
+
+    <div class="pub-filters" role="group" aria-label="Filter publications by type">
+      <button type="button" class="pub-filter" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="pub-filter" data-filter="report" aria-pressed="false">Reports</button>
+      <button type="button" class="pub-filter" data-filter="working-paper" aria-pressed="false">Working papers</button>
+      <button type="button" class="pub-filter" data-filter="briefing" aria-pressed="false">Briefings</button>
+      <button type="button" class="pub-filter" data-filter="industry" aria-pressed="false">Industry studies</button>
+      <button type="button" class="pub-filter" data-filter="data" aria-pressed="false">Data</button>
+      <button type="button" class="pub-filter" data-filter="commentary" aria-pressed="false">Commentary</button>
+    </div>
+
+    <ul class="pubs" id="pubs">
+      <li class="pub" data-type="report">
+        <div><span class="pub-type">Report</span><span class="pub-area">Work &amp; Workforce</span></div>
+        <div>
+          <h3><a href="ai-workforce-report.html">AI &amp; the Canadian Workforce: Overview</a></h3>
           <p>A task-level look at which Canadian jobs are exposed, augmented or resilient, and what to actually do about it.</p>
-          <span class="meta">Overview · 12 min read</span>
+          <p class="pub-byline">Cantana Research · Overview · 12 min read</p>
         </div>
-      </a>
-      <a class="article" href="contact.html">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8"/>
-            <circle cx="9" cy="12" r=".7" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r=".7" fill="currentColor" stroke="none"/><circle cx="15" cy="12" r=".7" fill="currentColor" stroke="none"/>
-            <circle cx="9" cy="15.5" r=".7" fill="currentColor" stroke="none"/><circle cx="12" cy="15.5" r=".7" fill="currentColor" stroke="none"/><circle cx="15" cy="15.5" r=".7" fill="currentColor" stroke="none"/>
-          </svg>
-        </div>
-        <div class="body">
-          <span class="tag">Industry brief</span>
-          <h3>AI in Canadian accounting</h3>
-          <p>Where automation hits first in bookkeeping and audit, and the higher-value work it frees people up to do.</p>
-          <span class="meta">Coming soon</span>
-        </div>
-      </a>
-      <a class="article" href="contact.html">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12h3.5l1.8-4.5 3.2 9 2.3-6 1.4 2.5H21"/>
-          </svg>
-        </div>
-        <div class="body">
-          <span class="tag">Industry brief</span>
-          <h3>AI in Canadian healthcare ops</h3>
-          <p>Paperwork, scribing and triage: the realistic near-term wins for clinics and health systems.</p>
-          <span class="meta">Coming soon</span>
-        </div>
-      </a>
-      <a class="article" href="contact.html">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 18.5h18"/><path d="M5 18.5v-2.5a7 7 0 0 1 14 0v2.5"/>
-            <path d="M10 6.6V5.2a1.2 1.2 0 0 1 1.2-1.2h1.6a1.2 1.2 0 0 1 1.2 1.2v1.4"/><path d="M9.7 7a7 7 0 0 1 4.6 0"/>
-          </svg>
-        </div>
-        <div class="body">
-          <span class="tag">Industry brief</span>
-          <h3>AI in the skilled trades</h3>
-          <p>Why hands-on trades are among the most resilient work in the country, and where AI still changes the back office.</p>
-          <span class="meta">Coming soon</span>
-        </div>
-      </a>
-      <a class="article" href="contact.html">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3 5 5.7v6.1c0 4 2.9 6.6 7 8.2 4.1-1.6 7-4.2 7-8.2V5.7L12 3Z"/><path d="M9 11.8l2 2 4-4"/>
-          </svg>
-        </div>
-        <div class="body">
-          <span class="tag">Policy</span>
-          <h3>PIPEDA, Law 25 &amp; deploying AI</h3>
-          <p>A plain-language guide to staying compliant while you adopt AI tools in Canada.</p>
-          <span class="meta">Coming soon</span>
-        </div>
-      </a>
-      <a class="article" href="contact.html">
-        <div class="thumb" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 4v15a1 1 0 0 0 1 1h15"/><path d="M7.5 14.5l3-3.5 3 2.5 4.5-5.5"/><path d="M18 8h-2.5M18 8v2.5"/>
-          </svg>
-        </div>
-        <div class="body">
-          <span class="tag">Analysis</span>
+        <div class="pub-side"><span class="pub-status is-live">Available</span><a href="ai-workforce-report.html">Read overview →</a></div>
+      </li>
+      <li class="pub" data-type="working-paper">
+        <div><span class="pub-type">Working paper</span><span class="pub-area">Canada's Competitiveness</span></div>
+        <div>
           <h3>The adoption gap</h3>
           <p>Canada leads the world in AI research but lags in actually using it. We size the gap, and the opportunity inside it.</p>
-          <span class="meta">Coming soon</span>
+          <p class="pub-byline">Cantana Research · Forthcoming</p>
         </div>
-      </a>
-    </div>
-    <p class="price-note" style="margin-top:26px">We're just getting started, and more editions are in progress. Want your industry looked at? <a href="contact.html" style="color:var(--red);font-weight:600">Commission a report →</a></p>
+        <div class="pub-side"><span class="pub-status">In preparation</span></div>
+      </li>
+      <li class="pub" data-type="briefing">
+        <div><span class="pub-type">Briefing</span><span class="pub-area">Responsible Adoption</span></div>
+        <div>
+          <h3>PIPEDA, Law 25 &amp; deploying AI</h3>
+          <p>A plain-language guide to staying compliant while you adopt AI tools in Canada.</p>
+          <p class="pub-byline">Cantana Research · Forthcoming</p>
+        </div>
+        <div class="pub-side"><span class="pub-status">In preparation</span></div>
+      </li>
+      <li class="pub" data-type="industry">
+        <div><span class="pub-type">Industry study</span><span class="pub-area">Industry Transformation</span></div>
+        <div>
+          <h3>AI in Canadian accounting</h3>
+          <p>Where automation hits first in bookkeeping and audit, and the higher-value work it frees people up to do.</p>
+          <p class="pub-byline">Cantana Research · Forthcoming</p>
+        </div>
+        <div class="pub-side"><span class="pub-status">In preparation</span></div>
+      </li>
+      <li class="pub" data-type="industry">
+        <div><span class="pub-type">Industry study</span><span class="pub-area">Industry Transformation</span></div>
+        <div>
+          <h3>AI in Canadian healthcare operations</h3>
+          <p>Paperwork, scribing and triage: the realistic near-term wins for clinics and health systems.</p>
+          <p class="pub-byline">Cantana Research · Forthcoming</p>
+        </div>
+        <div class="pub-side"><span class="pub-status">In preparation</span></div>
+      </li>
+      <li class="pub" data-type="industry">
+        <div><span class="pub-type">Industry study</span><span class="pub-area">Work &amp; Workforce</span></div>
+        <div>
+          <h3>AI in the skilled trades</h3>
+          <p>Why hands-on trades are among the most resilient work in the country, and where AI still changes the back office.</p>
+          <p class="pub-byline">Cantana Research · Forthcoming</p>
+        </div>
+        <div class="pub-side"><span class="pub-status">In preparation</span></div>
+      </li>
+    </ul>
+    <p class="pubs-empty" id="pubsEmpty" hidden>Nothing published in this category yet. <a href="#publications" data-filter-reset>See all publications</a> or sign up above to hear when it is.</p>
+
+    <p class="price-note" style="text-align:left;margin-top:24px">Want your industry studied? <a href="contact.html?audience=institution" style="color:var(--ink);font-weight:600;border-bottom:1px solid var(--maple)">Commission research →</a></p>
+  </div>
+</section>
+
+<!-- Standards -->
+<section class="section-alt">
+  <div class="wrap">
+    <span class="eyebrow">How we work</span>
+    <h2>Our research standards</h2>
+    <ul class="standards">
+      <li><h3>Independent</h3><p>Our findings are not shaped by the tools or vendors we might recommend.</p></li>
+      <li><h3>Task-level</h3><p>We look at the work people actually do, not just job titles.</p></li>
+      <li><h3>Canadian context</h3><p>Grounded in Canada's industries, regions, regulation and labour market.</p></li>
+      <li><h3>Open &amp; bilingual</h3><p>Published openly wherever possible, in English and French.</p></li>
+    </ul>
   </div>
 </section>
 
@@ -152,8 +189,8 @@
   <div class="wrap">
     <div class="cta-band">
       <h2>Partner with us on research.</h2>
-      <p>Universities, associations, funders and enterprises: let's produce work that earns citations and drives real decisions.</p>
-      <a href="contact.html" class="btn btn-primary">Start a conversation →</a>
+      <p>Universities, associations, funders, governments and enterprises: let's produce work that earns citations and drives real decisions.</p>
+      <a href="contact.html?audience=institution" class="btn btn-primary">Talk to Cantana →</a>
     </div>
   </div>
 </section>

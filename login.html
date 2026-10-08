@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Log in — Northfront AI</title>
-<meta name="description" content="Log in or create an account to access Northfront AI's full research reports." />
+<title>Log in · Cantana</title>
+<meta name="description" content="Log in or create a Cantana account to access full research reports." />
 <link rel="stylesheet" href="styles.css" />
 <script src="components.js" defer></script>
 </head>
@@ -17,24 +17,31 @@
     <div class="breadcrumb"><a href="index.html">Home</a><span>/</span> Log in</div>
     <span class="eyebrow">Account</span>
     <h1 id="authTitle">Log in</h1>
-    <p class="lead">Access the full research reports and get notified when new editions drop.</p>
+    <p class="lead" id="authLead">Access full research reports and manage your Cantana account.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap" style="max-width:480px">
-    <form id="authForm" novalidate>
+    <!-- method="post" with no action: if the script ever fails to load, the browser
+         never puts the email/password into the URL. The button also stays disabled
+         until the login script is ready. -->
+    <form id="authForm" method="post" novalidate>
       <div class="ok-msg" id="okMsg"></div>
       <div class="err-msg" id="errMsg" style="display:none"></div>
+      <div class="field" id="nameField" hidden>
+        <label for="authName">Full name</label>
+        <input id="authName" name="name" type="text" placeholder="Jane Tremblay" autocomplete="name" maxlength="120" />
+      </div>
       <div class="field">
         <label for="authEmail">Email</label>
         <input id="authEmail" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
       </div>
       <div class="field">
         <label for="authPassword">Password</label>
-        <input id="authPassword" name="password" type="password" required minlength="6" placeholder="At least 6 characters" autocomplete="current-password" />
+        <input id="authPassword" name="password" type="password" required minlength="8" placeholder="At least 8 characters" autocomplete="current-password" />
       </div>
-      <button type="submit" class="btn btn-primary" id="authSubmit" style="width:100%;justify-content:center">Log in</button>
+      <button type="submit" class="btn btn-primary" id="authSubmit" style="width:100%;justify-content:center" disabled>Log in</button>
       <p class="form-note" style="text-align:center;margin-top:14px">
         <a href="#" id="modeToggle">Don't have an account? Sign up</a>
       </p>
@@ -44,17 +51,20 @@
 
 <footer id="site-footer"></footer>
 
+<script>
+  // If the login module can't load (offline, blocked CDN), say so instead of doing nothing.
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      if (window.__authReady) return;
+      var err = document.getElementById('errMsg');
+      err.textContent = '⚠️ Login could not load. Please check your connection and refresh the page.';
+      err.style.display = 'block';
+    }, 4000);
+  });
+</script>
+
 <script type="module">
-  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-  // 👉 Paste your Supabase project URL and anon (public) key here to go live.
-  //    Find both in your Supabase project: Settings → API.
-  //    The anon key is safe to expose client-side — it's a public
-  //    identifier, not a secret; Row Level Security controls what it can do.
-  const SUPABASE_URL = 'https://mygvgcrpywzaffybsrdp.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15Z3ZnY3JweXd6YWZmeWJzcmRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzNDIyMTEsImV4cCI6MjA5OTkxODIxMX0.yn5T8J4C1mrqJY2elCXjhq5ZrgnbrxIicK7KgL2Pe6k';
-
-  const isPlaceholder = SUPABASE_URL.includes('YOUR-PROJECT') || SUPABASE_ANON_KEY.includes('YOUR-ANON-KEY');
+  import { supabase, isConfigured, friendlyAuthError, safeNext } from './supabase-client.js';
 
   const form = document.getElementById('authForm');
   const modeToggle = document.getElementById('modeToggle');
@@ -62,57 +72,100 @@
   const errMsg = document.getElementById('errMsg');
   const submitBtn = document.getElementById('authSubmit');
   const title = document.getElementById('authTitle');
+  const lead = document.getElementById('authLead');
+  const nameField = document.getElementById('nameField');
+  const passwordInput = document.getElementById('authPassword');
 
-  function nextParam() {
-    return new URLSearchParams(window.location.search).get('next') || 'ai-workforce-report.html';
+  window.__authReady = true;
+
+  function showError(text) {
+    okMsg.style.display = 'none';
+    errMsg.textContent = '⚠️ ' + text;
+    errMsg.style.display = 'block';
+  }
+  function showOk(text) {
+    errMsg.style.display = 'none';
+    okMsg.textContent = text;
+    okMsg.style.display = 'block';
   }
 
-  if (isPlaceholder) {
-    errMsg.textContent = "⚠️ Login isn't configured yet — paste your Supabase URL and anon key into login.html to go live.";
-    errMsg.style.display = 'block';
-    form.querySelectorAll('input,button').forEach(el => (el.disabled = true));
+  if (!isConfigured) {
+    showError("Login isn't configured yet. Add your Supabase URL and anon key to supabase-client.js.");
   } else {
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    let mode = 'signin';
+    let mode = new URLSearchParams(window.location.search).get('mode') === 'signup' ? 'signup' : 'signin';
 
+    function render() {
+      const signup = mode === 'signup';
+      title.textContent = signup ? 'Create your account' : 'Log in';
+      lead.textContent = signup
+        ? 'Create a free account to read full research reports and get new editions first.'
+        : 'Access full research reports and manage your Cantana account.';
+      submitBtn.textContent = signup ? 'Create account' : 'Log in';
+      modeToggle.textContent = signup ? 'Already have an account? Log in' : "Don't have an account? Sign up";
+      nameField.hidden = !signup;
+      passwordInput.autocomplete = signup ? 'new-password' : 'current-password';
+      okMsg.style.display = 'none';
+      errMsg.style.display = 'none';
+    }
+    render();
+
+    // Already logged in? Go straight to the account (or the requested page).
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) window.location.href = nextParam();
+      if (data.session) window.location.replace(safeNext());
     });
 
     modeToggle.addEventListener('click', (e) => {
       e.preventDefault();
       mode = mode === 'signin' ? 'signup' : 'signin';
-      title.textContent = mode === 'signin' ? 'Log in' : 'Create your account';
-      submitBtn.textContent = mode === 'signin' ? 'Log in' : 'Sign up';
-      modeToggle.textContent = mode === 'signin' ? "Don't have an account? Sign up" : 'Already have an account? Log in';
-      okMsg.style.display = 'none';
-      errMsg.style.display = 'none';
+      render();
     });
+
+    submitBtn.disabled = false;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('authEmail').value.trim();
-      const password = document.getElementById('authPassword').value;
+      const password = passwordInput.value;
+      const fullName = document.getElementById('authName').value.trim();
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError('Please enter a valid email address.');
+      if (password.length < 8) return showError('Your password must be at least 8 characters.');
 
       submitBtn.disabled = true;
-      okMsg.style.display = 'none';
-      errMsg.style.display = 'none';
+      const label = submitBtn.textContent;
+      submitBtn.textContent = mode === 'signin' ? 'Logging in…' : 'Creating account…';
 
-      const { error } = mode === 'signin'
-        ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password });
-
-      submitBtn.disabled = false;
-
-      if (error) {
-        errMsg.textContent = '⚠️ ' + error.message;
-        errMsg.style.display = 'block';
-        return;
+      try {
+        if (mode === 'signin') {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw error;
+          showOk('✅ Logged in. Taking you to your account…');
+          setTimeout(() => window.location.replace(safeNext()), 500);
+        } else {
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: { full_name: fullName },
+              emailRedirectTo: new URL('account.html', window.location.href).href,
+            },
+          });
+          if (error) throw error;
+          if (data.session) {
+            showOk('✅ Account created. Taking you to your account…');
+            setTimeout(() => window.location.replace(safeNext()), 500);
+          } else {
+            // Email confirmation is on: no session until they click the link.
+            showOk('📧 Almost done! We sent a confirmation link to ' + email + '. Click it to activate your account, then log in.');
+            form.reset();
+          }
+        }
+      } catch (err) {
+        showError(friendlyAuthError(err));
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = label;
       }
-
-      okMsg.textContent = mode === 'signin' ? '✅ Logged in — redirecting…' : '✅ Account created — redirecting…';
-      okMsg.style.display = 'block';
-      setTimeout(() => { window.location.href = nextParam(); }, 600);
     });
   }
 </script>
